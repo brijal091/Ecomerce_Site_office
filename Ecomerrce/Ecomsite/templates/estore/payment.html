@@ -1,0 +1,76 @@
+{% extends 'estore/main.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="col-lg-6">
+		<div class="box-element" id="form-wrapper">
+			<form id="form" method="POST" action="{% url 'paymentProceed' %}">{% csrf_token %}
+
+				<div id="shipping-info">
+					<hr>
+					<p>Shipping Information:</p>
+					<hr>
+					<div class="form-field">
+						<input class="form-control" type="text" name="Name" placeholder="Name" required>
+					</div>
+					<div class="form-field">
+						<input class="form-control" type="email" name="Email" placeholder="Email" required>
+					</div>
+					<div class="form-field">
+						<input class="form-control" type="text" name="address" placeholder="Address.." required>
+					</div>
+					<div class="form-field">
+						<input class="form-control" type="text" name="city" placeholder="City.." required>
+					</div>
+					<div class="form-field">
+						<input class="form-control" type="text" name="state" placeholder="State.." required>
+					</div>
+					<div class="form-field">
+						<input class="form-control" type="text" name="zipcode" placeholder="Zip code.." required>
+					</div>
+					<div class="form-field">
+						<input class="form-control" type="text" name="country" placeholder="Country" required>
+					</div>
+				</div>
+				<div class="form-field">
+					<input class="form-control" type="text" name="cupon_code" placeholder="If you have coupon
+					Code">
+				</div>
+				<div class="msg">
+					{% for message in messages %}
+					<h3  style="font-size: small; color: red;">{{message}}</h3>
+					{% endfor %}
+				</div>
+				<hr>
+				<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+			</form>
+		</div>
+	</div>
+
+	<div class="col-lg-6">
+		<div class="box-element">
+			<a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+			<hr>
+			<h3>Order Summary</h3>
+			<hr>
+			{% for item in items %}
+			<div class="cart-row">
+				<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+				<div style="flex:2">
+					<p>{{item.product.name}}</p>
+				</div>
+				<div style="flex:1">
+					<p>Rs.{{item.product.price|floatformat:2}}</p>
+				</div>
+				<div style="flex:1">
+					<p>x{{item.quantity}}</p>
+				</div>
+			</div>
+			{% endfor %}
+			<h6>Items: {{order.get_cart_items}}</h6>
+			<h5>Total: Rs.{{ order.get_total_cart |floatformat:2}}</h5>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

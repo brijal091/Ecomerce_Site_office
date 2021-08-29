@@ -1,0 +1,16 @@
+{% extends 'estore/main.html' %}
+{% load static %}
+{% block content %}
+
+{% if status == True %}
+	<div class="success-msg">Payment SuccessFull</div>
+{% else %}
+	<div class="success-msg">Sorry Payment Unsuccessfull, Please Try again Later.</div>
+{% endif %}
+
+<div class="row">
+	<div class="col-lg-12">
+		<a class="btn btn-outline-dark" href="{% url 'estore' %}">&#x2190; Continue Shopping</a>
+	</div>
+</div>
+{% endblock content %}

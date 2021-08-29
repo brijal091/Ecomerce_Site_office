@@ -1,0 +1,35 @@
+{% extends 'estore/main.html' %}
+{% load static %}
+{% block content %}
+<hr>
+<h3>Please Check You Order</h3>
+<hr>
+{% for item in items %}
+<div class="cart-row">
+	<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+	<div style="flex:2">
+		<p>{{item.product.name}}</p>
+	</div>
+	<div style="flex:1">
+		<p>Rs {{item.product.price|floatformat:2}}</p>
+	</div>
+	<div style="flex:1">
+		<p>x{{item.quantity}}</p>
+	</div>
+</div>
+{% endfor %}
+<h6>Items: {{cartItems}}</h6>
+
+<h6><p> You Got Discount of {{discount_amt}}%</p></h6><hr>
+<h5><p"> You Pay just: 	Rs {{amount|floatformat:2}}</p></h5>
+<form action="{% url 'success' %}" method="POST">{% csrf_token %}
+	<script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_kwHK8oF2E8PSYQ"
+		data-amount="{{ response_Payment.amount }}" data-currency="INR" data-order_id="{{order_id}}"
+		data-buttontext="Pay Now" data-name="Estore Payment"
+		data-description="We care your privacy, Your Details are sequred" data-image="{% static 'img/usericon.png' %}"
+		data-prefill.name="{{Name}}" data-prefill.email="{{Email}}" data-theme.color="#80C5F3">
+		</script>
+	<input id="form-button" class="btn btn-success btn-block" type="hidden" custom="Hidden Element" name="hidden">
+</form>
+
+{% endblock content %}

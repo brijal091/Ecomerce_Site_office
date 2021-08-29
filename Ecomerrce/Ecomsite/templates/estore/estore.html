@@ -1,0 +1,23 @@
+{% extends 'estore/main.html' %}
+{% load static %}
+{% block content %}
+<h2>Estore</h2>
+<hr>
+	<div class="row">
+		
+		{% for product in Products %}
+			<div class="col-lg-4 rowProd">
+				<img class="thumbnail" src="{{product.image.url}}" alt="Product Image">
+				<div class="box-element product">
+					<h5><strong>{{product.name}}</strong></h5>
+					<h6><strong>{{product.pcategory}}</strong></h6>
+					<hr>
+					<button data-product = {{product.id}} data-action = "add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+					<a class="btn btn-outline-success" href="#">View</a>
+					<h4 style="display: inline-block; font-size: 18px;"><strong>Rs.{{product.price}}</strong></h4>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock content %}
